@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="zimbabwe_payroll.ReportModal">
+        <div class="zw-modal-backdrop">
+            <div class="zw-modal-container">
+                <div class="zw-modal-header">
+                    <h2>Generate Payroll Report</h2>
+                    <button class="zw-modal-close" onclick="this.closest('.zw-modal-backdrop').remove()">×</button>
+                </div>
+                <div class="zw-modal-body">
+                    <div class="zw-form-group">
+                        <label>Pay Run:</label>
+                        <select id="zw-payrun-select" class="zw-form-control">
+                            <option value="">Select a Pay Run...</option>
+                        </select>
+                    </div>
+                    <div class="zw-form-group">
+                        <label>Report Type:</label>
+                        <select id="zw-report-type-select" class="zw-form-control">
+                            <option value="salary_breakdown">Salary Breakdown</option>
+                            <option value="salary_summary">Salary Summary</option>
+                            <option value="detailed_breakdown">Detailed Salary Breakdown</option>
+                            <option value="summary_breakdown">Summary Salary Breakdown</option>
+                            <option value="nssa">NSSA Report</option>
+                            <option value="nssa_p4">NSSA P4 Report</option>
+                            <option value="zimra_itf">ZIMRA ITF Report</option>
+                            <option value="nec">NEC Report</option>
+                            <option value="zimdef">ZIMDEF Report</option>
+                        </select>
+                    </div>
+                    <div class="zw-form-group">
+                        <label>Format:</label>
+                        <div class="zw-format-options">
+                            <label class="zw-radio-card">
+                                <input type="radio" name="zw-format" value="pdf" checked="checked"/>
+                                <span class="zw-radio-label">PDF</span>
+                            </label>
+                            <label class="zw-radio-card">
+                                <input type="radio" name="zw-format" value="excel"/>
+                                <span class="zw-radio-label">Excel</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="zw-modal-footer">
+                    <button class="zw-btn zw-btn-secondary" onclick="this.closest('.zw-modal-backdrop').remove()">Cancel</button>
+                    <button class="zw-btn zw-btn-primary" onclick="window.ZimbabweReportViewer.generateReport()">Generate Report</button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,285 @@
+/* ============================================================
+   PDF REPORT TABLE STYLES - PDF COMPATIBLE
+   Zimbabwe Payroll Reports
+   Optimized for wkhtmltopdf rendering
+   ============================================================ */
+
+/* ============================================================
+   REPORT PAGE LAYOUT
+   ============================================================ */
+.page {
+    padding: 22px 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    font-size: 15px;
+}
+
+/* ============================================================
+   REPORT HEADER
+   ============================================================ */
+.report-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.report-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1a1a2e;
+}
+
+.report-subtitle {
+    font-size: 16px;
+    color: #666666;
+    margin: 0;
+}
+
+/* ============================================================
+   SUMMARY TABLE (Top Cards)
+   ============================================================ */
+.summary-table {
+    margin-bottom: 24px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #c5c5c5;
+}
+
+.summary-table td {
+    padding: 18px 22px;
+    font-size: 15px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    vertical-align: top;
+    line-height: 1.6;
+    width: 25%;
+}
+
+.summary-table td strong,
+.summary-label {
+    display: block;
+    color: #555555;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.summary-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a1a2e;
+    margin-top: 6px;
+}
+
+/* ============================================================
+   BASE TABLE STYLING
+   ============================================================ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* ============================================================
+   TABLE HEADER
+   ============================================================ */
+table thead tr th,
+.main-data-table thead tr th,
+.data-table thead tr th {
+    background-color: #1a1a2e;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 16px 18px;
+    border: 1px solid #2a2a4a;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+/* Right-aligned header cells */
+table thead tr th.text-right,
+table thead tr th.col-date,
+table thead tr th.col-amount {
+    text-align: right;
+    padding-right: 26px;
+}
+
+/* Header column name alignment */
+table thead tr th.col-name {
+    text-align: left;
+    padding-left: 22px;
+}
+
+/* ============================================================
+   TABLE BODY
+   ============================================================ */
+table tbody tr td,
+.main-data-table tbody tr td,
+.data-table tbody tr td {
+    padding: 14px 18px;
+    border: 1px solid #dddddd;
+    font-size: 15px;
+    color: #333333;
+    vertical-align: middle;
+    line-height: 1.7;
+}
+
+/* Alternating row colors */
+table tbody tr.row-even,
+.main-data-table tbody tr.row-even,
+.data-table tbody tr.row-even {
+    background-color: #f7f8fa;
+}
+
+table tbody tr.row-odd,
+.main-data-table tbody tr.row-odd,
+.data-table tbody tr.row-odd {
+    background-color: #ffffff;
+}
+
+/* Right-aligned body cells */
+table tbody tr td.text-right,
+table tbody tr td.col-date,
+table tbody tr td.col-amount,
+.main-data-table tbody tr td.text-right,
+.main-data-table tbody tr td.col-date,
+.main-data-table tbody tr td.col-amount {
+    text-align: right;
+    padding-right: 26px;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+/* Left-aligned name/text columns */
+table tbody tr td.col-name,
+.main-data-table tbody tr td.col-name {
+    font-weight: bold;
+    color: #1a1a2e;
+    padding-left: 22px;
+}
+
+/* Date columns */
+table tbody tr td.col-date,
+.main-data-table tbody tr td.col-date {
+    font-size: 14px;
+    color: #555555;
+}
+
+/* Left border accent on even rows */
+table tbody tr.row-even td:first-child,
+.main-data-table tbody tr.row-even td:first-child {
+    border-left: 5px solid #667eea;
+    padding-left: 17px;
+}
+
+/* ============================================================
+   TABLE FOOTER (Totals)
+   ============================================================ */
+table tfoot tr td,
+.main-data-table tfoot tr td {
+    padding: 16px 18px;
+    font-weight: bold;
+    font-size: 15px;
+    border: 1px solid #bbbbbb;
+    background-color: #e8eaed;
+    border-top: 3px solid #999999;
+    line-height: 1.6;
+    color: #1a1a2e;
+}
+
+table tfoot tr td.text-right,
+.main-data-table tfoot tr td.text-right {
+    text-align: right;
+    padding-right: 26px;
+}
+
+/* Grand total row */
+table tfoot tr.grand-total td,
+.main-data-table tfoot tr.grand-total td {
+    background-color: #d0d3dc;
+    font-size: 16px;
+    border-top: 3px solid #666666;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+/* ============================================================
+   NET PAY / GREEN HIGHLIGHT ROW
+   ============================================================ */
+table tbody tr.net-row td,
+table tfoot tr.net-row td {
+    background-color: #d4edda;
+    font-weight: bold;
+    border-top: 3px solid #28a745;
+}
+
+/* ============================================================
+   BORDERED TABLE
+   ============================================================ */
+table.table-bordered,
+.main-data-table,
+.data-table {
+    border: 1px solid #c5c5c5;
+}
+
+/* ============================================================
+   COMPACT TABLE (Summary Stats)
+   ============================================================ */
+table.table-sm {
+    margin-bottom: 16px;
+}
+
+table.table-sm td {
+    padding: 16px 18px;
+    font-size: 15px;
+}
+
+table.table-sm td strong {
+    color: #555555;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: bold;
+}
+
+/* ============================================================
+   LINE HEIGHT & SPACING
+   ============================================================ */
+table td, table th {
+    line-height: 1.7;
+}
+
+/* ============================================================
+   PAGE BREAK CONTROL
+   ============================================================ */
+table tr {
+    page-break-inside: avoid;
+}
+
+table thead {
+    display: table-header-group;
+}
+
+table tfoot {
+    display: table-footer-group;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+table tbody tr.empty-row td {
+    text-align: center;
+    padding: 36px 18px;
+    color: #999999;
+    font-style: italic;
+    font-size: 16px;
+    background-color: #fafafa;
+}

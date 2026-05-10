@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Buttons shifted to the new Wizard in Reporting Menu -->
+    <record id="view_hr_payslip_run_form_zimbabwe_reports" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form.zimbabwe.reports</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <!-- Removed buttons -->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_tree_zimbabwe_reports" model="ir.ui.view">
+        <field name="name">hr.payslip.tree.zimbabwe.reports</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <!-- Removed buttons -->
+            </xpath>
+        </field>
+    </record>
+</odoo>

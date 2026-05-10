@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_salary_breakdown_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="run">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-set="company" t-value="run.company_id"/>
+                        <t t-set="bd" t-value="(data or {}).get('breakdown', {})"/>
+                        <t t-set="currency" t-value="run.company_id.currency_id"/>
+                        <t t-set="currency_name" t-value="currency.name"/>
+
+                        <div class="report-header">
+                            <h2>Salary Breakdown</h2>
+                            <p class="report-subtitle">
+                                Pay run: <span t-out="run.name"/> | Period: <span t-out="run.date_start"/> to <span t-out="run.date_end"/>
+                            </p>
+                        </div>
+
+                        <table class="summary-table">
+                            <tr>
+                                <td>
+                                    <span class="summary-label">Total employees</span>
+                                    <span class="summary-value" t-out="bd.get('total_employees', 0)"/>
+                                </td>
+                                <td>
+                                    <span class="summary-label">Total earnings (<span t-out="currency_name"/>)</span>
+                                    <span class="summary-value" t-out="bd.get('total_earnings', 0.0)" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td>
+                                    <span class="summary-label">Total deductions (<span t-out="currency_name"/>)</span>
+                                    <span class="summary-value" t-out="bd.get('total_deductions', 0.0)" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td>
+                                    <span class="summary-label">Net pay (<span t-out="currency_name"/>)</span>
+                                    <span class="summary-value" t-out="(bd.get('total_earnings', 0.0) - bd.get('total_deductions', 0.0))" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="main-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-name">Earnings</th>
+                                    <th class="col-amount">Amount (<span t-out="currency_name"/>)</th>
+                                    <th class="col-name">Deductions</th>
+                                    <th class="col-amount">Amount (<span t-out="currency_name"/>)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="earn_rows" t-value="bd.get('earnings', [])"/>
+                                <t t-set="ded_rows" t-value="bd.get('deductions', [])"/>
+                                <t t-set="max_rows" t-value="max(len(earn_rows), len(ded_rows))"/>
+                                <t t-foreach="range(max_rows)" t-as="idx">
+                                    <tr t-att-class="'row-even' if idx % 2 == 0 else 'row-odd'">
+                                        <td class="col-name">
+                                            <span t-if="idx &lt; len(earn_rows)" t-out="earn_rows[idx]['name']"/>
+                                        </td>
+                                        <td class="col-amount">
+                                            <span t-if="idx &lt; len(earn_rows)" t-out="earn_rows[idx]['amount']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                        </td>
+                                        <td class="col-name">
+                                            <span t-if="idx &lt; len(ded_rows)" t-out="ded_rows[idx]['name']"/>
+                                        </td>
+                                        <td class="col-amount">
+                                            <span t-if="idx &lt; len(ded_rows)" t-out="ded_rows[idx]['amount']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="col-name">Total earnings</td>
+                                    <td class="col-amount"><span t-out="bd.get('total_earnings', 0.0)" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                    <td class="col-name">Total deductions</td>
+                                    <td class="col-amount"><span t-out="bd.get('total_deductions', 0.0)" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                </tr>
+                                <tr class="net-row">
+                                    <td colspan="3" class="col-name">Net pay</td>
+                                    <td class="col-amount"><span t-out="(bd.get('total_earnings', 0.0) - bd.get('total_deductions', 0.0))" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_salary_breakdown" model="ir.actions.report">
+        <field name="name">Salary Breakdown</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zimbabwe_payroll.report_salary_breakdown_document</field>
+        <field name="report_file">zimbabwe_payroll.report_salary_breakdown_document</field>
+    </record>
+</odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_nssa_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="run">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-set="company" t-value="run.company_id"/>
+                        <t t-set="nssa" t-value="(data or {}).get('nssa', {})"/>
+                        <t t-set="currency" t-value="run.company_id.currency_id"/>
+                        <t t-set="currency_name" t-value="currency.name"/>
+
+                        <div class="report-header">
+                            <h2>NSSA Contribution Report</h2>
+                            <p class="report-subtitle">
+                                Pay run: <span t-out="run.name"/> | Period: <span t-out="run.date_start"/> to <span t-out="run.date_end"/>
+                            </p>
+                        </div>
+
+                        <table class="summary-table">
+                            <tr>
+                                <td>
+                                    <span class="summary-label">Employees</span>
+                                    <span class="summary-value" t-out="len(nssa.get('employees', []))"/>
+                                </td>
+                                <td>
+                                    <span class="summary-label">Total Basic Salary (<span t-out="currency_name"/>)</span>
+                                    <span class="summary-value" t-out="nssa.get('totals', {}).get('basic_salary', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td>
+                                    <span class="summary-label">Employee Contributions (<span t-out="currency_name"/>)</span>
+                                    <span class="summary-value" t-out="nssa.get('totals', {}).get('employee_nssa', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                                <td>
+                                    <span class="summary-label">Total NSSA Payment (<span t-out="currency_name"/>)</span>
+                                    <span class="summary-value" t-out="nssa.get('totals', {}).get('total_nssa', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="main-data-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-name">Surname</th>
+                                    <th class="col-name">First Names</th>
+                                    <th class="col-date">Start Date</th>
+                                    <th class="col-date">End Date</th>
+                                    <th class="col-amount">Basic Salary (<span t-out="currency_name"/>)</th>
+                                    <th class="col-amount">Employee (<span t-out="currency_name"/>)</th>
+                                    <th class="col-amount">Employer (<span t-out="currency_name"/>)</th>
+                                    <th class="col-amount">Total (<span t-out="currency_name"/>)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="nssa.get('employees', [])" t-as="emp">
+                                    <tr t-att-class="'row-even' if emp_index % 2 == 0 else 'row-odd'">
+                                        <td class="col-name"><span t-out="emp.get('surname')"/></td>
+                                        <td class="col-name"><span t-out="emp.get('first_names')"/></td>
+                                        <td class="col-date"><span t-out="emp.get('start_date')"/></td>
+                                        <td class="col-date"><span t-out="emp.get('end_date')"/></td>
+                                        <td class="col-amount"><span t-out="emp.get('basic_salary')" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                        <td class="col-amount"><span t-out="emp.get('employee_nssa')" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                        <td class="col-amount"><span t-out="emp.get('employer_nssa')" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                        <td class="col-amount"><span t-out="emp.get('total_nssa')" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr class="grand-total">
+                                    <td colspan="4">Grand Totals</td>
+                                    <td class="text-right"><span t-out="nssa.get('totals', {}).get('basic_salary', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                    <td class="text-right"><span t-out="nssa.get('totals', {}).get('employee_nssa', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                    <td class="text-right"><span t-out="nssa.get('totals', {}).get('employer_nssa', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                    <td class="text-right"><span t-out="nssa.get('totals', {}).get('total_nssa', 0)" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_nssa" model="ir.actions.report">
+        <field name="name">NSSA Report</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">zimbabwe_payroll.report_nssa_document</field>
+        <field name="report_file">zimbabwe_payroll.report_nssa_document</field>
+    </record>
+</odoo>
